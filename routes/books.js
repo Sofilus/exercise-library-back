@@ -1,20 +1,27 @@
 var express = require('express');
 var router = express.Router();
 
-let books = [{name: "Pippi", borrowed: false}, {name: "Spöket laban", borrowed: false}];
+let books = [{name: "Pippi", borrowed: false, id: 0}, {name: "Spöket laban", borrowed: false, id: 1}];
 
 router.get("/", function(req, res){
     res.json(books)
  });
+
+router.post("/borrow", function(req, res){
+    let bookId = req.body.bookId;
+    let borrowedBook = books.find((book) => {
+        return (bookId == book.id)
+    })
+    borrowedBook.borrowed = true;
+    res.send("Borrowed book")
+    
+})
 
 module.exports = router;
 
 /* STEG
 FÖRSTA SIDAN
 Lista alla böcker som finns
-+ lånad eller ej
-- lånad som boolean i arrayen
-- Gör så de står utlånad eller något istället för true eller false
 + Låna
 - knapp
 
